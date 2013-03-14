@@ -1,5 +1,7 @@
 package infra.images.util;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Wraps image size and density
  *
@@ -11,6 +13,10 @@ public class ImageSize {
     final int realHeight;
     final float density;
     final String name;
+
+    static public ImageSize extract(BufferedImage image) {
+        return new ImageSize(image.getWidth(), image.getHeight(), 1f);
+    }
 
     static public ImageSize buildReal(int realWidth, int realHeight) {
         return new ImageSize(realWidth, realHeight, 1f);
