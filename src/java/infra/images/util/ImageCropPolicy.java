@@ -1,49 +1,59 @@
 package infra.images.util;
 
+import java.util.EnumSet;
+
 /**
  * @author Dmitry Kurinskiy
  * @since 21.10.11 14:58
  */
 public enum ImageCropPolicy {
-    DEFAULT(15),
-    NONE(0),
-    TOP_LEFT(5),
-    TOP_CENTER(7),
-    TOP_RIGHT(6),
-    CENTER_LEFT(13),
-    CENTER_RIGHT(14),
-    CENTER(15),
-    BOTTOM_LEFT(9),
-    BOTTOM_RIGHT(10),
-    BOTTOM_CENTER(11);
+    DEFAULT(EnumSet.of(CropSide.DEFAULT)),
+    NONE(EnumSet.noneOf(CropSide.class)),
+    TOP_LEFT(EnumSet.of(CropSide.TOP, CropSide.LEFT)),
+    TOP_CENTER(EnumSet.of(CropSide.TOP)),
+    TOP_RIGHT(EnumSet.of(CropSide.TOP, CropSide.RIGHT)),
+    CENTER_LEFT(EnumSet.of(CropSide.LEFT)),
+    CENTER_RIGHT(EnumSet.of(CropSide.RIGHT)),
+    CENTER(EnumSet.of(CropSide.DEFAULT)),
+    BOTTOM_LEFT(EnumSet.of(CropSide.BOTTOM, CropSide.LEFT)),
+    BOTTOM_RIGHT(EnumSet.of(CropSide.BOTTOM, CropSide.RIGHT)),
+    BOTTOM_CENTER(EnumSet.of(CropSide.BOTTOM));
 
-    private byte policy;
+    private enum CropSide {
+        TOP, RIGHT, BOTTOM, LEFT, DEFAULT // css order
+    }
 
-    ImageCropPolicy(int policy) {
-        this.policy = (byte) policy;
+    private final EnumSet<CropSide> cropSides;
+
+    ImageCropPolicy(EnumSet<CropSide> cropSides) {
+        this.cropSides = cropSides;
     }
 
     public boolean isDefault() {
-        return policy == 15;
+        return cropSides.contains(CropSide.DEFAULT);
     }
 
     public boolean isNoCrop() {
-        return policy == 0;
+        return cropSides.isEmpty();
+    }
+
+    public boolean isAny() {
+        return !cropSides.isEmpty();
     }
 
     public boolean isTop() {
-        return (policy & 12) == 4;
+        return cropSides.contains(CropSide.TOP);
     }
 
     public boolean isBottom() {
-        return (policy & 12) == 8;
+        return cropSides.contains(CropSide.BOTTOM);
     }
 
     public boolean isLeft() {
-        return (policy & 3) == 1;
+        return cropSides.contains(CropSide.LEFT);
     }
 
     public boolean isRight() {
-        return (policy & 3) == 2;
+        return cropSides.contains(CropSide.RIGHT);
     }
 }
