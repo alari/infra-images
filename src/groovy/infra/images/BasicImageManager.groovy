@@ -55,7 +55,7 @@ class BasicImageManager implements ImageManager {
     @Override
     ImageInfo getInfo(ImageFormat format) {
         if (format instanceof CustomFormat) {
-            format.baseFormat = imageBundle.basesFormat
+            format.baseFormat = imageBundle.baseFormat
         }
         new ImageInfo(format, getSize(format), getSrc(format))
     }
@@ -110,7 +110,7 @@ class BasicImageManager implements ImageManager {
     void reformat(ImageFormat format) {
         if (!isStored()) return;
         if (format instanceof CustomFormat) {
-            format.baseFormat = imageBundle.basesFormat
+            format.baseFormat = imageBundle.baseFormat
         }
         loadOriginal()
         if (originalImage.file?.exists()) {
@@ -168,7 +168,7 @@ class BasicImageManager implements ImageManager {
     @Override
     String getSrc(ImageFormat format) {
         if (format instanceof CustomFormat) {
-            format.setBaseFormat(imageBundle.basesFormat)
+            format.setBaseFormat(imageBundle.baseFormat)
             if (!filesManager.exists(getFilename(format))) {
                 loadOriginal()
                 ImageBox box = imageFormatter.format(format, originalImage)

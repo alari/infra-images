@@ -11,15 +11,15 @@ import java.util.Map;
  */
 public class ImageFormatsBundle {
     private final Map<String, ImageFormat> formats;
-    private final ImageFormat basesFormat;
+    private final ImageFormat baseFormat;
     private final String name;
     private final ImageFormat original;
     private Integer version;
 
-    public ImageFormatsBundle(String name, Map<String, ImageFormat> formats, ImageFormat basesFormat) {
+    public ImageFormatsBundle(String name, Map<String, ImageFormat> formats, ImageFormat baseFormat) {
         this.name = name;
-        this.basesFormat = basesFormat;
-        this.original = new OriginalFormat(this.name, this.basesFormat);
+        this.baseFormat = baseFormat;
+        this.original = new OriginalFormat(this.name, this.baseFormat);
         formats.put(name, this.original);
         this.formats = formats;
     }
@@ -28,8 +28,8 @@ public class ImageFormatsBundle {
         return formats;
     }
 
-    public ImageFormat getBasesFormat() {
-        return basesFormat;
+    public ImageFormat getBaseFormat() {
+        return baseFormat;
     }
 
     public String getName() {
