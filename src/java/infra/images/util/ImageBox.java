@@ -41,9 +41,7 @@ public class ImageBox {
     public ImageSize getSize() {
         if (size == null) {
             try {
-                size = ImageSize.buildReal(
-                        getBuffered().getWidth(),
-                        getBuffered().getHeight());
+                size = ImageSize.extract(getBuffered());
             } catch (IOException e) {
                 size = new ImageSize(0, 0, 0f);
             }
